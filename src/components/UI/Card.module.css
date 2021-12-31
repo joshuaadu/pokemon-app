@@ -1,0 +1,11 @@
+.card {
+  max-width: 20rem;
+  width: 15rem;
+  min-width: 10rem;
+  height: 30rem;
+  background-color: rgb(201, 199, 238);
+  border-radius: 30px;
+  box-shadow: 3px 10px 15px rgb(128, 128, 128),
+    inset 0px 0px 1px rgb(128, 128, 128);
+  border: 8px solid white;
+}
