@@ -1,0 +1,16 @@
+.tabs {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: rgb(0, 0, 0, 0.7);
+}
+
+.tab {
+  cursor: pointer;
+}
+
+.active {
+  color: black;
+}
