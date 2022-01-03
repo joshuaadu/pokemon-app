@@ -1,11 +1,18 @@
 .card {
-  max-width: 20rem;
-  width: 15rem;
+  max-width: 30rem;
+  width: 20rem;
   min-width: 10rem;
-  height: 30rem;
+  height: 35rem;
   background-color: rgb(201, 199, 238);
   border-radius: 30px;
   box-shadow: 3px 10px 15px rgb(128, 128, 128),
     inset 0px 0px 1px rgb(128, 128, 128);
   border: 8px solid white;
+}
+
+.circle {
+  position: absolute;
+  background-color: rgb(255, 255, 255, 0.9);
+  z-index: -1;
+  /* width: ; */
 }
