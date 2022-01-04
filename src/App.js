@@ -1,36 +1,32 @@
 import "./styles.css";
-import * as React from "react";
+import { useEffect } from "react";
+import Pokemon from "./components/Pokemon/Pokemon";
 import PokemonCard from "./components/Pokemon/PokemonCard";
-import Pokemons from "./components/Pokemon/Pokemons";
+import PokemonDatabase, {
+  usePokemonData
+} from "./components/store/pokemon-database";
 
 export default function App() {
-  const [pokemonUrl, setPokemonUrl] = React.useState(
-    "https://pokeapi.co/api/v2/pokemon/"
-  );
-  const [pokemonList, setPokemonList] = React.useState([]);
+  const [pokemonData, loadMorePokemon] = usePokemonData();
 
-  React.useEffect(() => {
-    (async () => {
-      const res = await fetch(pokemonUrl);
-      const data = await res.json();
-      setPokemonList(data);
-    })();
-  }, [pokemonUrl]);
-  console.log(pokemonList, "working");
-
-  const getNextPokemonList = () => {
-    setPokemonUrl(pokemonList.next);
-  };
+  useEffect(() => {
+    console.log(pokemonData);
+  }, [pokemonData]);
 
   return (
     <div className="App">
-      <h1>Pokemon Random Generator</h1>
-      <Pokemons list={pokemonList.results}>
-        <PokemonCard></PokemonCard>
-      </Pokemons>
-      <button onClick={getNextPokemonList}>Show more Pokemons!</button>
+      <h1>Pokemon Pokedex</h1>
+      <Pokemon>
+        {pokemonData.map((data) => (
+          <PokemonCard
+            key={data.name}
+            id={data.id}
+            name={data.name}
+            // elementType="something"
+          />
+        ))}
+      </Pokemon>
+      <button onClick={loadMorePokemon}>Show more!</button>
     </div>
   );
 }
-
-// {/* <button onClick={() => setShow((prev) => !prev)}>Show me!</button> */}

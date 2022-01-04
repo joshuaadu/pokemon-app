@@ -1,0 +1,12 @@
+.overview {
+  margin-top: 2rem;
+}
+.overview small {
+  color: rgb(0, 0, 0, 0.7);
+}
+
+.number {
+  background-color: rgb(160, 157, 233);
+  padding: 5px 15px;
+  border-radius: 10px;
+}
