@@ -1,12 +1,12 @@
 import "./styles.css";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
+import Pokemon from "./components/Pokemon/Pokemon";
 import PokemonCard from "./components/Pokemon/PokemonCard";
 import PokemonDatabase, {
   usePokemonData
 } from "./components/store/pokemon-database";
 
 export default function App() {
-  // const ctx = useContext(PokemonDatabase);
   const [pokemonData, loadMorePokemon] = usePokemonData();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function App() {
   return (
     <div className="App">
       <h1>Pokemon Pokedex</h1>
-      <div>
+      <Pokemon>
         {pokemonData.map((data) => (
           <PokemonCard
             key={data.name}
@@ -25,8 +25,8 @@ export default function App() {
             // elementType="something"
           />
         ))}
-      </div>
-      <button>Show more!</button>
+      </Pokemon>
+      <button onClick={loadMorePokemon}>Show more!</button>
     </div>
   );
 }

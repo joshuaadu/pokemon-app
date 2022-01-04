@@ -1,7 +1,13 @@
 .pokemonCard {
   padding: 2rem 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 .pokemonCard img {
   max-width: 100%;
   padding: 0.5rem;
+}
+
+.view {
+  flex-basis: 90%;
 }
