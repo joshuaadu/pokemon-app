@@ -22,7 +22,7 @@ export default function App() {
             key={data.name}
             id={data.id}
             name={data.name}
-            // elementType="something"
+            types={data.types}
           />
         ))}
       </Pokemon>
