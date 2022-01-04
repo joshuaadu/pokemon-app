@@ -69,6 +69,25 @@ export const usePokemonData = () => {
 
   useEffect(() => {
     // turn every url into a promise that fetches a single pokemon
+    // (async () => {
+    //   const promises = pokemonUrls.map(async (url) => {
+    //     return await fetch(url);
+    //   });
+    //   const results = await Promise.all(promises)
+    //   const final = results.map(async (res) => {
+    //     if (!res.ok) {
+    //       return
+    //     }
+    //     const data = await res.json();
+    //     console.log("data", data)
+    //     if (!data) {
+    //       return
+    //     }
+    //     return data
+    //   })
+    //   setPokemons(final)
+    // })();
+
     (async () => {
       let pokemons = [];
       console.log("pokemonUrls: ", pokemonUrls);
@@ -83,12 +102,10 @@ export const usePokemonData = () => {
       }
       setPokemons(pokemons);
     })();
-
     // (async () => {
     //   const promises = pokemonUrls.map(async (url) => {
     //     return await fetch(url);
     //   });
-
     //   const results = await Promise.all(promises)
     //   const final = results.map(async (res) => {
     //     if (!res.ok) {

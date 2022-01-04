@@ -3,14 +3,17 @@ import classes from "./PokemonCard.module.css";
 import Overview from "./views/Overview";
 import Tabs from "./views/Tabs";
 
-const PokemonCard = ({ id, name, elementType = "" }) => {
-  console.log(id, name, elementType);
+const PokemonCard = ({ id, name, types }) => {
+  console.log(id, name, types);
+  const cName = name[0].toUpperCase() + name.slice(1);
+  const typeList = types.map((type) => type.type.name).join("/");
+  console.log(typeList);
   return (
     <Card className={classes.pokemonCard}>
       <Overview
         id={id}
-        name={name}
-        type={elementType}
+        name={cName}
+        type={typeList}
         // imageUrl={`https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${id}.svg`}
         imageUrl={`https://cdn.traction.one/pokedex/pokemon/${id}.png`}
       ></Overview>
