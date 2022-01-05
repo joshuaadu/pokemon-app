@@ -5,6 +5,7 @@
   justify-content: space-around;
   align-items: center;
   color: rgb(0, 0, 0, 0.7);
+  gap: 0.5rem;
 }
 
 .tab {

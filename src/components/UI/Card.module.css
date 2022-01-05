@@ -9,6 +9,7 @@
   box-shadow: 3px 10px 15px rgb(128, 128, 128),
     inset 0px 0px 1px rgb(128, 128, 128);
   border: 8px solid white;
+  min-width: min-content;
 }
 
 .circle {
