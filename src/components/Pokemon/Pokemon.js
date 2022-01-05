@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+// import { colorsProvider } from "../store/pokemon-colors";
 import classes from "./Pokemon.module.css";
 const Pokemon = (props) => {
   // const { pokemonData, setPokemonData } = useState();

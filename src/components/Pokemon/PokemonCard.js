@@ -1,15 +1,22 @@
+import { useContext } from "react";
+import PokemonColors from "../store/pokemon-colors";
 import Card from "../UI/Card";
 import classes from "./PokemonCard.module.css";
 import Overview from "./views/Overview";
 import Tabs from "./views/Tabs";
 
 const PokemonCard = ({ id, name, types }) => {
+  const ctx = useContext(PokemonColors);
   console.log(id, name, types);
   const cName = name[0].toUpperCase() + name.slice(1);
   const typeList = types.map((type) => type.type.name).join("/");
-  console.log(typeList);
+  const typeColor = ctx[types[0].type.name];
+
   return (
-    <Card className={classes.pokemonCard}>
+    <Card
+      className={classes.pokemonCard}
+      style={{ backgroundColor: typeColor }}
+    >
       <Overview
         id={id}
         name={cName}
