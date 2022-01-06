@@ -16,7 +16,7 @@ const PokemonColors = React.createContext({
   normal: "#f5f5f5"
 });
 
-export const colorsProvider = (props) => {
+export const PokemonColorsProvider = (props) => {
   return <PokemonColors.Provider>{props.children}</PokemonColors.Provider>;
 };
 

@@ -7,7 +7,6 @@ import Tabs from "./views/Tabs";
 
 const PokemonCard = ({ id, name, types }) => {
   const ctx = useContext(PokemonColors);
-  console.log(id, name, types);
   const cName = name[0].toUpperCase() + name.slice(1);
   const typeList = types.map((type) => type.type.name).join("/");
   const typeColor = ctx[types[0].type.name];
