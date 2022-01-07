@@ -19,7 +19,9 @@ export default function App() {
           />
         ))}
       </Pokemon>
-      <button onClick={loadMorePokemon}>Show more!</button>
+      <button className="button" onClick={loadMorePokemon}>
+        Show more!
+      </button>
     </div>
   );
 }
