@@ -6,6 +6,7 @@
 }
 
 .number {
+  font-family: "Press Start 2P", cursive;
   background-color: rgb(160, 157, 233);
   padding: 5px 15px;
   border-radius: 10px;
