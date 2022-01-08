@@ -5,6 +5,7 @@ import { usePokemonData } from "./components/store/pokemon-database";
 
 export default function App() {
   const [pokemonData, loadMorePokemon] = usePokemonData();
+  console.log(pokemonData);
 
   return (
     <div className="App">
@@ -16,6 +17,7 @@ export default function App() {
             id={data.id}
             name={data.name}
             types={data.types}
+            stats={data.stats}
           />
         ))}
       </Pokemon>

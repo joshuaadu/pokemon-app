@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./Tabs.module.css";
 
 const Tabs = (props) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const { activeTab, setActiveTab } = props;
   console.log(activeTab);
   const children = React.Children.map(props.children, (child, index) => {
     return React.cloneElement(child, {
