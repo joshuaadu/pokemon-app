@@ -1,46 +1,67 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "react-query";
+
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex]
+    ];
+  }
+
+  return array;
+}
 
 export const usePokemonData = () => {
-  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
-  const [urlResponse, setUrlResponse] = useState("");
-  const [pokemonUrls, setPokemonList] = useState([]);
-  const [pokemons, setPokemons] = useState([]);
+  // const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
 
-  useEffect(() => {
-    (async () => {
-      const res = await fetch(url);
-      const data = await res.json();
-      setUrlResponse(data);
-      const list = data.results.map((item) => {
-        return item.url;
-      });
-      setPokemonList((prev) => [...prev, ...list]);
-    })();
-  }, [url]);
+  // const loadNextPokemonList = (nextUrlList) => {
+  //   setUrl(nextUrlList);
+  // };
 
-  useEffect(() => {
-    // turn every url into a promise that fetches a single pokemon
-    (async () => {
-      const promises = pokemonUrls.map(async (url) => {
-        const res = await fetch(url);
-        if (!res.ok) {
-          return;
-        }
+  const query = useQuery(
+    "pokemons",
+    async () => {
+      try {
+        const res = await fetch("https://pokeapi.co/api/v2/pokemon/");
         const data = await res.json();
-        if (!data) {
-          return;
-        }
-        return data;
-      });
-      const results = await Promise.all(promises);
 
-      setPokemons(results);
-    })();
-  }, [pokemonUrls]);
+        const urls = data.results.map((item) => {
+          return item.url;
+        });
+        const promises = urls.map(async (url) => {
+          const res = await fetch(url);
+          if (!res.ok) {
+            return;
+          }
+          const data = await res.json();
+          if (!data) {
+            return;
+          }
+          return data;
+        });
+        let results = await Promise.all(promises);
+        results = shuffle(results);
+        return results;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    {
+      refetchOnWindowFocus: true,
+      staleTime: 5000,
+      refetchInterval: 15000
+    }
+  );
 
-  const loadNextPokemonList = () => {
-    setUrl(urlResponse.next);
-  };
-
-  return [pokemons, loadNextPokemonList];
+  return query;
 };
