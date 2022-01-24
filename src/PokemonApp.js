@@ -4,8 +4,9 @@ import PokemonCard from "./components/Pokemon/PokemonCard";
 import { usePokemonData } from "./components/store/pokemon-database";
 import { useQuery } from "react-query";
 
+// Status: loading, error, success, loadingMore
 const PokemonApp = () => {
-  const { data: pokemonData, fetchMorePokemon, status } = usePokemonData();
+  const [{ data: pokemons, status }, loadNextPokemonList] = usePokemonData();
 
   return (
     <>
@@ -16,7 +17,7 @@ const PokemonApp = () => {
         ) : status === "error" ? (
           <div>Error Loading pokemons.</div>
         ) : (
-          pokemonData.map((data) => (
+          pokemons.map((data) => (
             <PokemonCard
               key={data.name}
               id={data.id}
@@ -27,9 +28,10 @@ const PokemonApp = () => {
           ))
         )}
       </Pokemon>
-      {/* <button className="button" onClick={loadMorePokemon}>
+      {status === "loadingNext" && <div> Loading more... </div>}
+      <button className="button" onClick={loadNextPokemonList}>
         Show more!
-      </button> */}
+      </button>
     </>
   );
 };

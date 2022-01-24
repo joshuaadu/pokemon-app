@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useQuery } from "react-query";
 
 function shuffle(array) {
@@ -22,46 +22,63 @@ function shuffle(array) {
 }
 
 export const usePokemonData = () => {
-  // const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
+  const [allPokemons, setAllPokemons] = useState([]);
+  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
+  const [isInitial, setInitial] = useState(true);
+  const [nextListURL, setNextListURL] = useState();
 
-  // const loadNextPokemonList = (nextUrlList) => {
-  //   setUrl(nextUrlList);
-  // };
+  const loadNextPokemonList = () => {
+    setUrl(nextListURL);
+  };
 
-  const query = useQuery(
-    "pokemons",
-    async () => {
-      try {
-        const res = await fetch("https://pokeapi.co/api/v2/pokemon/");
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      setNextListURL(data.next);
+
+      const urls = data.results.map((item) => {
+        return item.url;
+      });
+      const promises = urls.map(async (url) => {
+        const res = await fetch(url);
+        if (!res.ok) {
+          return;
+        }
         const data = await res.json();
-
-        const urls = data.results.map((item) => {
-          return item.url;
-        });
-        const promises = urls.map(async (url) => {
-          const res = await fetch(url);
-          if (!res.ok) {
-            return;
-          }
-          const data = await res.json();
-          if (!data) {
-            return;
-          }
-          return data;
-        });
-        let results = await Promise.all(promises);
-        results = shuffle(results);
-        return results;
-      } catch (e) {
-        throw new Error(e.message);
-      }
-    },
-    {
-      refetchOnWindowFocus: true,
-      staleTime: 5000,
-      refetchInterval: 15000
+        if (!data) {
+          return;
+        }
+        return data;
+      });
+      let results = await Promise.all(promises);
+      // results = shuffle(results);
+      setAllPokemons((prev) => [...prev, ...results]);
+      setInitial(false);
+      return results;
+    } catch (e) {
+      throw new Error(e.message);
     }
-  );
+  }, [url]);
 
-  return query;
+  const query = useQuery(["pokemons", url], fetchData, {
+    refetchOnWindowFocus: true,
+    staleTime: 5000,
+    refetchInterval: 15000
+  });
+
+  return [
+    {
+      ...query,
+      data: allPokemons,
+      status:
+        query.status === "loading"
+          ? isInitial
+            ? "loading"
+            : "loadingNext"
+          : query.status
+    },
+    loadNextPokemonList
+  ];
 };
