@@ -53,7 +53,7 @@ export const usePokemonData = () => {
         return data;
       });
       let results = await Promise.all(promises);
-      // results = shuffle(results);
+      results = shuffle(results);
       setAllPokemons((prev) => [...prev, ...results]);
       setInitial(false);
       return results;
